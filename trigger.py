@@ -15,7 +15,10 @@ class TriggerRequest:
         # 遍历所有数据，提取(patient_id, visit_id)数据组装发送请求打印返回结果
         for patient in self.json:
             try:
-                params = [
+                headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, '
+                                         'like Gecko) Chrome/101.0.4951.41 Safari/537.36'}
+                params = {'dataSource': 'ETL'}
+                data = [
                     {
                         "patientId": patient[0],
                         "visitId": patient[1],
@@ -24,7 +27,7 @@ class TriggerRequest:
                 ]
 
                 # 发送post请求
-                self.response = requests.post(url=URL, json=params)
+                self.response = requests.post(url=URL, params=params, json=data, headers=headers)
 
                 # 打印返回结果
                 print('Trigger接口返回结果：{}\tVisitId：{}\tSourceVisitId：{}\t请求时间：{}'.
